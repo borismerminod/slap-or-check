@@ -1,0 +1,153 @@
+[gd_scene format=3 uid="uid://w6kllbodkdd5"]
+
+[ext_resource type="Script" uid="uid://psgvk6yn1n85" path="res://scripts/ui/AnswerButtons.gd" id="1_answer_buttons"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slap"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.9843, 0.8941, 0.8784, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.851, 0.2549, 0.1843, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slap_pressed"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.9608, 0.8118, 0.7843, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.851, 0.2549, 0.1843, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_check"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.8667, 0.949, 0.9255, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.0706, 0.4784, 0.3922, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_check_pressed"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0.7882, 0.9098, 0.8745, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.0706, 0.4784, 0.3922, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[node name="AnswerButtons" type="Control" node_paths=PackedStringArray("slap_button", "check_button") unique_id=597329657]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_answer_buttons")
+slap_button = NodePath("Layout/Buttons/SlapColumn/SlapButton")
+check_button = NodePath("Layout/Buttons/CheckColumn/CheckButton")
+
+[node name="Layout" type="MarginContainer" parent="." unique_id=2139774641]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -124.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 16
+
+[node name="Buttons" type="HBoxContainer" parent="Layout" unique_id=958688217]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="SlapColumn" type="VBoxContainer" parent="Layout/Buttons" unique_id=443367112]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="SlapButton" type="Button" parent="Layout/Buttons/SlapColumn" unique_id=84640222]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.702, 0.1882, 0.1216, 1)
+theme_override_colors/font_focus_color = Color(0.702, 0.1882, 0.1216, 1)
+theme_override_colors/font_pressed_color = Color(0.702, 0.1882, 0.1216, 1)
+theme_override_colors/font_hover_color = Color(0.702, 0.1882, 0.1216, 1)
+theme_override_font_sizes/font_size = 19
+theme_override_styles/normal = SubResource("StyleBoxFlat_slap")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_slap_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_slap")
+theme_override_styles/focus = SubResource("StyleBoxFlat_slap")
+text = "← Slap"
+
+[node name="SlapHint" type="Label" parent="Layout/Buttons/SlapColumn" unique_id=705920535]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.702, 0.1882, 0.1216, 0.7)
+theme_override_font_sizes/font_size = 11
+text = "flèche gauche"
+horizontal_alignment = 1
+
+[node name="CheckColumn" type="VBoxContainer" parent="Layout/Buttons" unique_id=853694455]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="CheckButton" type="Button" parent="Layout/Buttons/CheckColumn" unique_id=1495091120]
+custom_minimum_size = Vector2(0, 52)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0549, 0.3843, 0.3137, 1)
+theme_override_colors/font_focus_color = Color(0.0549, 0.3843, 0.3137, 1)
+theme_override_colors/font_pressed_color = Color(0.0549, 0.3843, 0.3137, 1)
+theme_override_colors/font_hover_color = Color(0.0549, 0.3843, 0.3137, 1)
+theme_override_font_sizes/font_size = 19
+theme_override_styles/normal = SubResource("StyleBoxFlat_check")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_check_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_check")
+theme_override_styles/focus = SubResource("StyleBoxFlat_check")
+text = "Check →"
+
+[node name="CheckHint" type="Label" parent="Layout/Buttons/CheckColumn" unique_id=329746918]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.0549, 0.3843, 0.3137, 0.7)
+theme_override_font_sizes/font_size = 11
+text = "flèche droite"
+horizontal_alignment = 1

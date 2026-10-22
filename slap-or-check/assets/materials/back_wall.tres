@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "BackWall"
+albedo_color = Color(0.8039, 0.8353, 0.8824, 1)
+roughness = 0.9

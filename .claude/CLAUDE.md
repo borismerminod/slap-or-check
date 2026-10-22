@@ -34,6 +34,24 @@ l'éditeur, ni en `--headless`. C'est lui qui teste dans l'éditeur. Toute scèn
 ressource doit donc être écrite dans un format texte valide (`.tscn`, `.tres`) et rester
 simple à relire à la main. À la fin d'un changement, dire ce qu'il faut vérifier.
 
+### Écrire un `.tscn` à la main
+
+Deux pièges déjà rencontrés, qui échouent silencieusement :
+
+- **Un `Transform3D` est sérialisé par lignes**, pas par axes : les arguments 0 à 2 sont
+  `basis.rows[0]`, soit `(x_axis.x, y_axis.x, z_axis.x)`. Ce n'est **pas** la convention
+  du constructeur GDScript `Transform3D(x_axis, y_axis, z_axis, origin)`. Se tromper
+  écrit la rotation **transposée**, donc inverse — et une translation seule n'en souffre
+  pas, ce qui masque l'erreur. Toute rotation écrite à la main se vérifie **à l'image**.
+- **Une référence de nœud exportée** (`@export var x: SomeNode`) n'est résolue que si
+  l'en-tête du nœud la déclare :
+  `[node name="A" type="B" node_paths=PackedStringArray("x")]`. Sans ça le `NodePath`
+  n'est jamais converti, la propriété reste nulle, et l'erreur n'apparaît qu'à
+  l'exécution dans le `_ready()` qui s'en sert.
+
+Règle générale : après avoir écrit un `.tscn` à la main, faire vérifier le résultat dans
+l'éditeur avant d'empiler l'étape suivante dessus.
+
 ## 2. Langue
 
 - **Tout le code est en anglais** : noms de classes, de fonctions, de variables, de
@@ -207,7 +225,23 @@ Points d'attention repris de la maquette :
   erreur −22, laissé passer −14, série de 5 +8, Vrai Gentil +20) sont **exposées** dans
   la configuration : elles ne sont pas testées et vont bouger.
 
-## 7. Méthode de travail
+## 7. Plans d'implémentation
+
+Tout plan d'implémentation est **écrit dans `documents/setup/`**, versionné avec le code.
+
+- Un fichier par étape, préfixé d'un numéro d'ordre : `01-third-person-camera.md`,
+  `02-...`. Le numéro dit dans quel ordre le jeu a été construit.
+- Le fichier commence par un en-tête de statut : étape, branche, date, état
+  (proposé / implémenté / abandonné).
+- Il contient le **contexte** (pourquoi ce changement), l'approche retenue, les fichiers
+  touchés, les valeurs chiffrées retenues et leur origine, et comment vérifier.
+- Quand l'implémentation s'écarte du plan, c'est le plan qu'on corrige : il doit rester
+  la description de ce qui existe, pas de ce qu'on avait imaginé.
+
+C'est la mémoire du projet : quelqu'un qui reprend doit pouvoir lire `documents/setup/`
+dans l'ordre et comprendre comment on en est arrivé là.
+
+## 8. Méthode de travail
 
 - Avancer par briques : une brique du game design à la fois, jouable, avant la suivante.
 - Nouvelle fonctionnalité = d'abord se demander où elle va dans les quatre couches

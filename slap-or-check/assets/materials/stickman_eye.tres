@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "StickmanEye"
+albedo_color = Color(0.0784, 0.0863, 0.1098, 1)
+roughness = 0.6

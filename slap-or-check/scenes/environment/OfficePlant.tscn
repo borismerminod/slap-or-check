@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="StandardMaterial3D" path="res://assets/materials/planter.tres" id="1_planter"]
+[ext_resource type="StandardMaterial3D" path="res://assets/materials/foliage.tres" id="2_foliage"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_planter"]
+top_radius = 0.22
+bottom_radius = 0.18
+height = 0.45
+radial_segments = 10
+
+[sub_resource type="SphereMesh" id="SphereMesh_foliage"]
+radius = 0.42
+height = 0.84
+
+[node name="OfficePlant" type="Node3D"]
+
+[node name="Planter" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.225, 0)
+mesh = SubResource("CylinderMesh_planter")
+material_override = ExtResource("1_planter")
+
+[node name="Foliage" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+mesh = SubResource("SphereMesh_foliage")
+material_override = ExtResource("2_foliage")

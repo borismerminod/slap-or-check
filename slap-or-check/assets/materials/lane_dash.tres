@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "LaneDash"
+albedo_color = Color(0.9098, 0.9255, 0.9490, 1)
+roughness = 0.9

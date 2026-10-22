@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="StandardMaterial3D" path="res://assets/materials/placeholder.tres" id="1_placeholder"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_body"]
+size = Vector3(0.4, 1.8, 0.3)
+
+[node name="PlaceholderFigure" type="Node3D"]
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+mesh = SubResource("BoxMesh_body")
+material_override = ExtResource("1_placeholder")

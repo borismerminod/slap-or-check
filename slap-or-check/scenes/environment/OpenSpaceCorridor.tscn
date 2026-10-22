@@ -1,0 +1,216 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Environment" path="res://assets/environments/open_space.tres" id="1_environment"]
+[ext_resource type="StandardMaterial3D" path="res://assets/materials/ground.tres" id="2_ground"]
+[ext_resource type="StandardMaterial3D" path="res://assets/materials/lane.tres" id="3_lane"]
+[ext_resource type="StandardMaterial3D" path="res://assets/materials/lane_dash.tres" id="4_lane_dash"]
+[ext_resource type="StandardMaterial3D" path="res://assets/materials/back_wall.tres" id="5_back_wall"]
+[ext_resource type="PackedScene" path="res://scenes/environment/OfficeBay.tscn" id="6_office_bay"]
+[ext_resource type="PackedScene" path="res://scenes/environment/OfficePlant.tscn" id="7_office_plant"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
+size = Vector2(10, 60)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_lane"]
+size = Vector2(1.6, 60)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_lane_dash"]
+size = Vector2(0.08, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_back_wall"]
+size = Vector3(14, 8, 0.2)
+
+[node name="OpenSpaceCorridor" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("1_environment")
+
+[node name="SunLight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.8949340, -0.3418070, 0.2868100, 0.0000000, 0.6427880, 0.7660440, -0.4461980, -0.6855590, 0.5752530, 3.0000000, 8.0000000, 6.0000000)
+light_energy = 0.55
+shadow_enabled = true
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
+mesh = SubResource("PlaneMesh_ground")
+material_override = ExtResource("2_ground")
+
+[node name="Lane" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.005, -20)
+mesh = SubResource("PlaneMesh_lane")
+material_override = ExtResource("3_lane")
+
+[node name="BackWall" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -34)
+mesh = SubResource("BoxMesh_back_wall")
+material_override = ExtResource("5_back_wall")
+
+[node name="LaneDashes" type="Node3D" parent="."]
+
+[node name="LaneDash1" type="MeshInstance3D" parent="LaneDashes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.01, 4.0)
+mesh = SubResource("PlaneMesh_lane_dash")
+material_override = ExtResource("4_lane_dash")
+
+[node name="LaneDash2" type="MeshInstance3D" parent="LaneDashes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.01, 1.6)
+mesh = SubResource("PlaneMesh_lane_dash")
+material_override = ExtResource("4_lane_dash")
+
+[node name="LaneDash3" type="MeshInstance3D" parent="LaneDashes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.01, -0.8)
+mesh = SubResource("PlaneMesh_lane_dash")
+material_override = ExtResource("4_lane_dash")
+
+[node name="LaneDash4" type="MeshInstance3D" parent="LaneDashes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.01, -3.2)
+mesh = SubResource("PlaneMesh_lane_dash")
+material_override = ExtResource("4_lane_dash")
+
+[node name="LaneDash5" type="MeshInstance3D" parent="LaneDashes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.01, -5.6)
+mesh = SubResource("PlaneMesh_lane_dash")
+material_override = ExtResource("4_lane_dash")
+
+[node name="LaneDash6" type="MeshInstance3D" parent="LaneDashes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.01, -8.0)
+mesh = SubResource("PlaneMesh_lane_dash")
+material_override = ExtResource("4_lane_dash")
+
+[node name="LaneDash7" type="MeshInstance3D" parent="LaneDashes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.01, -10.4)
+mesh = SubResource("PlaneMesh_lane_dash")
+material_override = ExtResource("4_lane_dash")
+
+[node name="LaneDash8" type="MeshInstance3D" parent="LaneDashes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.01, -12.8)
+mesh = SubResource("PlaneMesh_lane_dash")
+material_override = ExtResource("4_lane_dash")
+
+[node name="LaneDash9" type="MeshInstance3D" parent="LaneDashes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.01, -15.2)
+mesh = SubResource("PlaneMesh_lane_dash")
+material_override = ExtResource("4_lane_dash")
+
+[node name="LaneDash10" type="MeshInstance3D" parent="LaneDashes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.01, -17.6)
+mesh = SubResource("PlaneMesh_lane_dash")
+material_override = ExtResource("4_lane_dash")
+
+[node name="LaneDash11" type="MeshInstance3D" parent="LaneDashes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.01, -20.0)
+mesh = SubResource("PlaneMesh_lane_dash")
+material_override = ExtResource("4_lane_dash")
+
+[node name="LaneDash12" type="MeshInstance3D" parent="LaneDashes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.01, -22.4)
+mesh = SubResource("PlaneMesh_lane_dash")
+material_override = ExtResource("4_lane_dash")
+
+[node name="LaneDash13" type="MeshInstance3D" parent="LaneDashes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.01, -24.8)
+mesh = SubResource("PlaneMesh_lane_dash")
+material_override = ExtResource("4_lane_dash")
+
+[node name="LaneDash14" type="MeshInstance3D" parent="LaneDashes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.01, -27.2)
+mesh = SubResource("PlaneMesh_lane_dash")
+material_override = ExtResource("4_lane_dash")
+
+[node name="LaneDash15" type="MeshInstance3D" parent="LaneDashes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.01, -29.6)
+mesh = SubResource("PlaneMesh_lane_dash")
+material_override = ExtResource("4_lane_dash")
+
+[node name="LaneDash16" type="MeshInstance3D" parent="LaneDashes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.01, -32.0)
+mesh = SubResource("PlaneMesh_lane_dash")
+material_override = ExtResource("4_lane_dash")
+
+[node name="LaneDash17" type="MeshInstance3D" parent="LaneDashes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.01, -34.4)
+mesh = SubResource("PlaneMesh_lane_dash")
+material_override = ExtResource("4_lane_dash")
+
+[node name="LaneDash18" type="MeshInstance3D" parent="LaneDashes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.01, -36.8)
+mesh = SubResource("PlaneMesh_lane_dash")
+material_override = ExtResource("4_lane_dash")
+
+[node name="LaneDash19" type="MeshInstance3D" parent="LaneDashes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, 0.01, -39.2)
+mesh = SubResource("PlaneMesh_lane_dash")
+material_override = ExtResource("4_lane_dash")
+
+[node name="OfficeBays" type="Node3D" parent="."]
+
+[node name="LeftBay1" parent="OfficeBays" instance=ExtResource("6_office_bay")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9, 0, 0.0)
+
+[node name="RightBay1" parent="OfficeBays" instance=ExtResource("6_office_bay")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1, 0, -2.0)
+
+[node name="LeftBay2" parent="OfficeBays" instance=ExtResource("6_office_bay")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9, 0, -4.5)
+
+[node name="RightBay2" parent="OfficeBays" instance=ExtResource("6_office_bay")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1, 0, -6.5)
+
+[node name="LeftBay3" parent="OfficeBays" instance=ExtResource("6_office_bay")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9, 0, -9.0)
+
+[node name="RightBay3" parent="OfficeBays" instance=ExtResource("6_office_bay")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1, 0, -11.0)
+
+[node name="LeftBay4" parent="OfficeBays" instance=ExtResource("6_office_bay")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9, 0, -13.5)
+
+[node name="RightBay4" parent="OfficeBays" instance=ExtResource("6_office_bay")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1, 0, -15.5)
+
+[node name="LeftBay5" parent="OfficeBays" instance=ExtResource("6_office_bay")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9, 0, -18.0)
+
+[node name="RightBay5" parent="OfficeBays" instance=ExtResource("6_office_bay")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1, 0, -20.0)
+
+[node name="LeftBay6" parent="OfficeBays" instance=ExtResource("6_office_bay")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9, 0, -22.5)
+
+[node name="RightBay6" parent="OfficeBays" instance=ExtResource("6_office_bay")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1, 0, -24.5)
+
+[node name="LeftBay7" parent="OfficeBays" instance=ExtResource("6_office_bay")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9, 0, -27.0)
+
+[node name="RightBay7" parent="OfficeBays" instance=ExtResource("6_office_bay")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1, 0, -29.0)
+
+[node name="LeftBay8" parent="OfficeBays" instance=ExtResource("6_office_bay")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9, 0, -31.5)
+
+[node name="RightBay8" parent="OfficeBays" instance=ExtResource("6_office_bay")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1, 0, -33.5)
+
+[node name="LeftBay9" parent="OfficeBays" instance=ExtResource("6_office_bay")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.9, 0, -36.0)
+
+[node name="RightBay9" parent="OfficeBays" instance=ExtResource("6_office_bay")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.1, 0, -38.0)
+
+[node name="Plants" type="Node3D" parent="."]
+
+[node name="Plant1" parent="Plants" instance=ExtResource("7_office_plant")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6, 0, -1.2)
+
+[node name="Plant2" parent="Plants" instance=ExtResource("7_office_plant")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6, 0, -10.2)
+
+[node name="Plant3" parent="Plants" instance=ExtResource("7_office_plant")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6, 0, -19.2)
+
+[node name="Plant4" parent="Plants" instance=ExtResource("7_office_plant")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6, 0, -28.2)
+
+[node name="Plant5" parent="Plants" instance=ExtResource("7_office_plant")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6, 0, -37.2)
