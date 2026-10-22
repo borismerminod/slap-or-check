@@ -1,0 +1,12 @@
+[gd_scene format=3]
+
+[node name="ThirdPersonCameraRig" type="Node3D"]
+
+[node name="ShakeOffset" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="ShakeOffset"]
+transform = Transform3D(0.9653072, -0.0888580, 0.2455318, 0.0118358, 0.9542403, 0.2988073, -0.2608476, -0.2855348, 0.9221865, 0.9152688, 3.4672161, 4.9154372)
+keep_aspect = 1
+fov = 48.0
+near = 0.1
+far = 80.0

@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://cg017acw6kro8"]
+
+[ext_resource type="PackedScene" path="res://scenes/environment/OpenSpaceCorridor.tscn" id="1_corridor"]
+[ext_resource type="PackedScene" path="res://scenes/camera/ThirdPersonCameraRig.tscn" id="2_camera_rig"]
+[ext_resource type="PackedScene" path="res://scenes/characters/Stickman.tscn" id="4_stickman"]
+[ext_resource type="PackedScene" path="res://scenes/ui/AnswerButtons.tscn" id="5_answer_buttons"]
+[ext_resource type="Script" path="res://scripts/gameplay/PlayerAnswerController.gd" id="6_answer_controller"]
+
+[node name="Level" type="Node3D" unique_id=19102128]
+
+[node name="OpenSpaceCorridor" parent="." unique_id=652253956 instance=ExtResource("1_corridor")]
+
+[node name="ThirdPersonCameraRig" parent="." unique_id=853056640 instance=ExtResource("2_camera_rig")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.55, 0, 2.65)
+
+[node name="Characters" type="Node3D" parent="." unique_id=721357179]
+
+[node name="Player" parent="Characters" unique_id=1605615268 instance=ExtResource("4_stickman")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.55, 0, 2.65)
+
+[node name="IncomingCharacter" parent="Characters" unique_id=344316621 instance=ExtResource("4_stickman")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0.11, 0, 1.75)
+
+[node name="QueuedCharacter1" parent="Characters" unique_id=763877456 instance=ExtResource("4_stickman")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0.11, 0, -12)
+
+[node name="QueuedCharacter2" parent="Characters" unique_id=2099394913 instance=ExtResource("4_stickman")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0.11, 0, -13.7)
+
+[node name="Hud" type="CanvasLayer" parent="."]
+
+[node name="AnswerButtons" parent="Hud" instance=ExtResource("5_answer_buttons")]
+
+[node name="PlayerAnswerController" type="Node" parent="." node_paths=PackedStringArray("answer_input", "player")]
+script = ExtResource("6_answer_controller")
+answer_input = NodePath("../Hud/AnswerButtons")
+player = NodePath("../Characters/Player")

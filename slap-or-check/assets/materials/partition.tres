@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "Partition"
+albedo_color = Color(0.6863, 0.7529, 0.8392, 1)
+roughness = 0.9
