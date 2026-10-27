@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/LevelOutcomeBanner.gd" id="1_level_outcome_banner"]
+
+[node name="LevelOutcomeBanner" type="Control" node_paths=PackedStringArray("headline_label", "detail_label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_level_outcome_banner")
+headline_label = NodePath("Lines/HeadlineLabel")
+detail_label = NodePath("Lines/DetailLabel")
+
+[node name="Lines" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+alignment = 1
+theme_override_constants/separation = 6
+
+[node name="HeadlineLabel" type="Label" parent="Lines"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.07058824, 0.4784314, 0.3921569, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 0.8627451)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 52
+text = "Gagné !!!"
+horizontal_alignment = 1
+
+[node name="DetailLabel" type="Label" parent="Lines"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.8509804, 0.254902, 0.1843137, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 0.8627451)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 24
+text = "Moral à zéro"
+horizontal_alignment = 1

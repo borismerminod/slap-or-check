@@ -1,7 +1,9 @@
 ## The short message telling the player what just happened.
 ##
-## - Three kinds of message, each wired to its own signal in the level scene: the
-##   verdict of an answer, the bonus of a run of correct answers, and the defeat.
+## - Two kinds of message, each wired to its own signal in the level scene: the
+##   verdict of an answer, and the bonus of a run of correct answers. How the
+##   level ended belongs to [LevelOutcomeBanner], which stays up where this one
+##   fades.
 ## - Holds its own wording, in French, because a message to the player is
 ##   content. It reads a verdict and says nothing about how it was reached.
 ## - Names no number of points: what an event is worth is the business of the
@@ -26,9 +28,6 @@ const IGNORED_MESSAGE: String = "Il t'a bousculé et il est passé"
 
 ## Said when a run of correct answers completes. Takes the length of the run.
 const STREAK_BONUS_MESSAGE: String = "Série de %d : bonus de Moral"
-
-## Said when the moral runs out and the level is lost.
-const DEFEAT_MESSAGE: String = "Moral à zéro"
 
 ## Colour of a message that congratulates.
 const CORRECT_COLOR: Color = Color(0.055, 0.384, 0.314)
@@ -67,15 +66,6 @@ func show_streak_bonus(streak_length: int) -> void:
 	var message: String = STREAK_BONUS_MESSAGE % streak_length
 	_write_message(message, CORRECT_COLOR)
 	hide_timer.start()
-
-
-## Announces the defeat, and stays up.
-##
-## - Cancels the countdown rather than restarting it: a message about a level
-##   that is over has no reason to fade away.
-func show_defeat() -> void:
-	_write_message(DEFEAT_MESSAGE, MISTAKE_COLOR)
-	hide_timer.stop()
 
 
 ## Puts a message on screen in the given colour.

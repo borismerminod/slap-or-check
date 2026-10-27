@@ -13,6 +13,8 @@
 [ext_resource type="Resource" path="res://data/levels/level_01.tres" id="12_level_config"]
 [ext_resource type="Script" path="res://scripts/gameplay/MoralController.gd" id="13_moral_controller"]
 [ext_resource type="PackedScene" path="res://scenes/ui/MoralHud.tscn" id="14_moral_hud"]
+[ext_resource type="Script" path="res://scripts/gameplay/LevelEndController.gd" id="15_level_end_controller"]
+[ext_resource type="PackedScene" path="res://scenes/ui/LevelOutcomeBanner.tscn" id="16_level_outcome_banner"]
 
 [node name="Level" type="Node3D" unique_id=19102128]
 
@@ -46,6 +48,16 @@ player = NodePath("../Characters/Player")
 script = ExtResource("13_moral_controller")
 config = ExtResource("12_level_config")
 
+[node name="LevelEndController" type="Node" parent="." node_paths=PackedStringArray("level_director", "moral_controller", "restart_timer")]
+script = ExtResource("15_level_end_controller")
+level_director = NodePath("../LevelDirector")
+moral_controller = NodePath("../MoralController")
+restart_timer = NodePath("RestartTimer")
+restart_delay_seconds = 3.0
+
+[node name="RestartTimer" type="Timer" parent="LevelEndController"]
+one_shot = true
+
 [node name="Hud" type="CanvasLayer" parent="." unique_id=970710456]
 
 [node name="AnswerSwipeArea" parent="Hud" unique_id=959583832 instance=ExtResource("10_swipe_area")]
@@ -58,6 +70,8 @@ camera = NodePath("../../ThirdPersonCameraRig/ShakeOffset/Camera3D")
 [node name="FeedbackBanner" parent="Hud" unique_id=2116958794 instance=ExtResource("11_feedback_banner")]
 layout_mode = 3
 
+[node name="LevelOutcomeBanner" parent="Hud" instance=ExtResource("16_level_outcome_banner")]
+
 [node name="AnswerButtons" parent="Hud" unique_id=2042182752 instance=ExtResource("5_answer_buttons")]
 
 [connection signal="answer_judged" from="LevelDirector" to="Hud/FeedbackBanner" method="show_outcome"]
@@ -65,7 +79,8 @@ layout_mode = 3
 [connection signal="characters_remaining_changed" from="LevelDirector" to="Hud/MoralHud" method="show_remaining"]
 [connection signal="moral_changed" from="MoralController" to="Hud/MoralHud" method="show_moral"]
 [connection signal="streak_bonus_earned" from="MoralController" to="Hud/FeedbackBanner" method="show_streak_bonus"]
-[connection signal="depleted" from="MoralController" to="LevelDirector" method="stop"]
-[connection signal="depleted" from="MoralController" to="Hud/FeedbackBanner" method="show_defeat"]
+[connection signal="queue_cleared" from="LevelDirector" to="LevelEndController" method="report_victory"]
+[connection signal="depleted" from="MoralController" to="LevelEndController" method="report_defeat"]
+[connection signal="level_ended" from="LevelEndController" to="Hud/LevelOutcomeBanner" method="show_outcome"]
 [connection signal="answer_submitted" from="Hud/AnswerSwipeArea" to="LevelDirector" method="submit_answer"]
 [connection signal="answer_submitted" from="Hud/AnswerButtons" to="LevelDirector" method="submit_answer"]

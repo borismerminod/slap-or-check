@@ -5,10 +5,9 @@
 ## - Filters the player's answers. An answer is only passed on while a character
 ##   is still walking, which is what keeps a late swipe from landing on the next
 ##   one.
-## - Reports what happened without knowing who listens. The feedback banner is
-##   wired to it in the level scene; the moral gauge of the next step and the end
-##   screen of the one after plug into the same signals, and this script will not
-##   have to change for either.
+## - Reports what happened without knowing who listens. The feedback banner, the
+##   moral gauge and the arbiter of the end of the level are all wired to it in
+##   the level scene, and none of them is named here.
 class_name LevelDirector
 extends Node
 
@@ -22,8 +21,12 @@ signal answer_accepted(gesture: AnswerGesture.Kind)
 ## Emitted when a character the player ignored barges into them on the way past.
 signal player_shoved
 
-## Emitted once the last character of the queue has been dealt with.
-signal queue_emptied
+## Emitted once the corridor is clear: nobody is left to come and the last
+## character has walked off stage. That is the victory.
+##
+## - Deliberately not emitted the moment the waiting list runs out: the win would
+##   land over a character still flying through the air.
+signal queue_cleared
 
 ## Emitted when the number of characters still to come changes, so a counter can
 ## refresh without interrogating the queue every frame. The one walking up is
@@ -43,11 +46,6 @@ signal characters_remaining_changed(remaining: int)
 ## enough that the next one sets off while the previous is still in the air.
 @export_range(0.0, 2.0, 0.05) var delay_between_characters: float = 0.35
 
-## Rebuilds the queue when it runs out, so the loop can be played for as long as
-## it takes to judge it. The end of the level takes this over in the step that
-## adds the end screen.
-@export var restarts_when_empty: bool = true
-
 ## The characters still to come.
 var _queue: CharacterQueue = null
 
@@ -66,10 +64,13 @@ var _is_queue_running: bool = false
 ## True once the level has been stopped, which freezes it where it stands.
 var _is_stopped: bool = false
 
+## True between the waiting list running out and the last character walking off.
+var _is_waiting_for_the_last_exit: bool = false
+
 
 ## Fills the first queue and starts the wait for the first character.
 func _ready() -> void:
-	_restart_queue()
+	_build_queue()
 	_seconds_until_next_spawn = delay_between_characters
 
 
@@ -154,11 +155,23 @@ func _on_encounter_resolved(outcome: AnswerOutcome) -> void:
 	_seconds_until_next_spawn = delay_between_characters
 
 
-## Moves every leaving character, then drops those that are done.
+## Moves every leaving character, drops those that are done, and watches for the
+## corridor to clear.
 func _advance_exits(delta: float) -> void:
 	for exit in _active_exits:
 		exit.advance(delta)
 	_drop_finished_exits()
+	_report_cleared_corridor_if_awaited()
+
+
+## Announces the clear corridor, once the last character has walked off stage.
+func _report_cleared_corridor_if_awaited() -> void:
+	if not _is_waiting_for_the_last_exit:
+		return
+	if not _active_exits.is_empty():
+		return
+	_is_waiting_for_the_last_exit = false
+	queue_cleared.emit()
 
 
 ## Frees the figures that have been off stage long enough.
@@ -186,7 +199,7 @@ func _count_down_to_next_spawn(delta: float) -> void:
 ## Sends the next character up the corridor, or ends the queue.
 func _start_next_encounter() -> void:
 	if _queue.is_empty():
-		_on_queue_emptied()
+		_close_queue()
 		return
 	var brief: CharacterBrief = _queue.pop_next()
 	var figure: Stickman = spawner.spawn(brief)
@@ -206,18 +219,22 @@ func _listen_to_current_encounter() -> void:
 	_current_encounter.resolved.connect(_on_encounter_resolved)
 
 
-## Reports the end of the queue, and starts over when asked to.
-func _on_queue_emptied() -> void:
-	queue_emptied.emit()
-	if not restarts_when_empty:
-		_is_queue_running = false
+## Stops spawning, and announces the clear corridor as soon as it is one.
+##
+## - Nobody is left to come. If characters are still walking off stage, the
+##   announcement waits for them, so a victory lands on an empty corridor.
+func _close_queue() -> void:
+	_is_queue_running = false
+	_report_characters_remaining()
+	var is_corridor_clear: bool = _active_exits.is_empty()
+	if is_corridor_clear:
+		queue_cleared.emit()
 		return
-	_restart_queue()
-	_seconds_until_next_spawn = delay_between_characters
+	_is_waiting_for_the_last_exit = true
 
 
-## Draws a fresh queue from the configuration of the level.
-func _restart_queue() -> void:
+## Draws the queue of the level from its configuration.
+func _build_queue() -> void:
 	_queue = QueueBuilder.build(config)
 	_is_queue_running = true
 	_report_characters_remaining()

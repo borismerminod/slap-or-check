@@ -80,7 +80,16 @@ func _on_value_changed(new_value: float) -> void:
 	moral_changed.emit(new_value)
 
 
-## Stops the drain for good and reports the defeat.
-func _on_depleted() -> void:
+## Freezes the moral where it stands, for good.
+##
+## - Called when the level ends, on a victory as much as on a defeat. Without it
+##   the bar would go on draining under a win, and could even reach zero there.
+## - Public because the arbiter of the end of the level calls it.
+func stop() -> void:
 	set_process(false)
+
+
+## Freezes the moral and reports the defeat.
+func _on_depleted() -> void:
+	stop()
 	depleted.emit()

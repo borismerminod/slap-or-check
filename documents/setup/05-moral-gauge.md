@@ -71,6 +71,9 @@ LevelDirector.answer_judged(outcome)
                     └→ depleted                   → LevelDirector.stop()
                                                    → FeedbackBanner.show_defeat()
 
+Ces deux dernières connexions ont été reprises par l'arbitre de l'étape 06 : `depleted`
+va désormais à `LevelEndController`, qui arrête le niveau et affiche la défaite.
+
 LevelDirector.characters_remaining_changed(n)     → MoralHud.show_remaining()
 ```
 
@@ -109,7 +112,7 @@ code de le dire, pas au fichier de scène.
 | `resources/LevelConfig.gd` | `@export var moral_balance: MoralBalance` |
 | `data/levels/level_01.tres` | désigne le `.tres` d'équilibrage |
 | `scripts/gameplay/LevelDirector.gd` | `characters_remaining_changed`, `stop()`, `_is_stopped` |
-| `scripts/ui/FeedbackBanner.gd` | `show_streak_bonus()`, `show_defeat()`, et un `_write_message()` commun |
+| `scripts/ui/FeedbackBanner.gd` | `show_streak_bonus()`, `show_defeat()` (retiré à l'étape 06), et un `_write_message()` commun |
 | `scenes/levels/Level.tscn` | `MoralController`, `MoralHud`, et six connexions de plus |
 
 ## Valeurs chiffrées et leur origine
