@@ -25,6 +25,11 @@ signal player_shoved
 ## Emitted once the last character of the queue has been dealt with.
 signal queue_emptied
 
+## Emitted when the number of characters still to come changes, so a counter can
+## refresh without interrogating the queue every frame. The one walking up is
+## counted: the player is still dealing with them.
+signal characters_remaining_changed(remaining: int)
+
 ## What this level is made of. Injected from the scene.
 @export var config: LevelConfig
 
@@ -58,6 +63,9 @@ var _seconds_until_next_spawn: float = 0.0
 ## False once the queue has run out and is not being rebuilt.
 var _is_queue_running: bool = false
 
+## True once the level has been stopped, which freezes it where it stands.
+var _is_stopped: bool = false
+
 
 ## Fills the first queue and starts the wait for the first character.
 func _ready() -> void:
@@ -67,12 +75,42 @@ func _ready() -> void:
 
 ## Drives the leaving characters, then either the current encounter or the wait
 ## for the next one.
+##
+## - The characters on their way out keep moving even once the level is stopped,
+##   so a figure caught in mid-air finishes its arc instead of hanging there.
 func _process(delta: float) -> void:
 	_advance_exits(delta)
+	if _is_stopped:
+		return
 	if _current_encounter != null:
 		_current_encounter.advance(delta)
 		return
 	_count_down_to_next_spawn(delta)
+
+
+## Ends the level where it stands.
+##
+## - Public because the defeat is wired to it by signal in the scene: the level
+##   never learns what stopped it, which is how the moral gauge can be retuned or
+##   removed without touching this script.
+## - Stops spawning and takes the bubble away. The character walking up stays
+##   frozen where they are, for the end screen to be drawn over.
+func stop() -> void:
+	_is_stopped = true
+	_is_queue_running = false
+	speech_bubble.clear()
+	_freeze_current_character()
+
+
+## Puts the character walking up back to a standstill.
+##
+## - Without this they keep walking on the spot: the animation player runs on its
+##   own clock, and stopping the level only stops moving them forward.
+func _freeze_current_character() -> void:
+	if _current_encounter == null:
+		return
+	var figure: Stickman = _current_encounter.figure()
+	figure.play_loop(Stickman.IDLE)
 
 
 ## Passes an answer on to the character walking up, if there is one.
@@ -82,7 +120,11 @@ func _process(delta: float) -> void:
 ##   needs one more connection and no change here.
 ## - The encounter itself decides whether the answer is still welcome, so a
 ##   swipe during an animation is simply dropped.
+## - A stopped level takes nothing: the character frozen in the corridor is a
+##   picture, not someone still waiting for an answer.
 func submit_answer(gesture: AnswerGesture.Kind) -> void:
+	if _is_stopped:
+		return
 	if _current_encounter == null:
 		return
 	_current_encounter.submit_answer(gesture)
@@ -154,6 +196,7 @@ func _start_next_encounter() -> void:
 	_listen_to_current_encounter()
 	_current_encounter.start_walk(spawner.spawn_z, config.walk_duration_seconds)
 	speech_bubble.show_phrase(brief.phrase, figure.bubble_anchor)
+	_report_characters_remaining()
 
 
 ## Listens to the three moments of the encounter just started.
@@ -177,6 +220,17 @@ func _on_queue_emptied() -> void:
 func _restart_queue() -> void:
 	_queue = QueueBuilder.build(config)
 	_is_queue_running = true
+	_report_characters_remaining()
+
+
+## Announces how many characters are still to come, the one walking up included.
+func _report_characters_remaining() -> void:
+	var waiting_count: int = _queue.count()
+	var walking_count: int = 0
+	if _current_encounter != null:
+		walking_count = 1
+	var remaining: int = waiting_count + walking_count
+	characters_remaining_changed.emit(remaining)
 
 
 ## Chooses how a character leaves, from the gesture they were given.

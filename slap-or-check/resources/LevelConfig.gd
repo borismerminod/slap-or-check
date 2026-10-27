@@ -23,3 +23,7 @@ extends Resource
 
 ## Which gesture each nature of sentence deserves in this level.
 @export var daily_rule: DailyRule = null
+
+## What each event costs or earns in points of moral. Shared by every level, so
+## that tuning the game is editing one file.
+@export var moral_balance: MoralBalance = null

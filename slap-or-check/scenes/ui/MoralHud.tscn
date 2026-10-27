@@ -1,0 +1,91 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/MoralHud.gd" id="1_moral_hud"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_background"]
+bg_color = Color(0.7176471, 0.7568628, 0.8117647, 0.7843137)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fill_normal"]
+bg_color = Color(0.07058824, 0.4784314, 0.3921569, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fill_low"]
+bg_color = Color(0.8509804, 0.254902, 0.1843137, 1)
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[node name="MoralHud" type="Control" node_paths=PackedStringArray("moral_bar", "moral_label", "remaining_label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_moral_hud")
+low_moral_threshold = 30.0
+moral_bar = NodePath("Layout/Rows/TopRow/MoralBar")
+normal_fill = SubResource("StyleBoxFlat_fill_normal")
+low_fill = SubResource("StyleBoxFlat_fill_low")
+moral_label = NodePath("Layout/Rows/TopRow/MoralLabel")
+remaining_label = NodePath("Layout/Rows/RemainingLabel")
+
+[node name="Layout" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 0
+
+[node name="Rows" type="VBoxContainer" parent="Layout"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+
+[node name="TopRow" type="HBoxContainer" parent="Layout/Rows"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="MoralBar" type="ProgressBar" parent="Layout/Rows/TopRow"]
+custom_minimum_size = Vector2(0, 18)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_background")
+theme_override_styles/fill = SubResource("StyleBoxFlat_fill_normal")
+max_value = 100.0
+value = 70.0
+show_percentage = false
+
+[node name="MoralLabel" type="Label" parent="Layout/Rows/TopRow"]
+custom_minimum_size = Vector2(44, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.1058824, 0.1176471, 0.1490196, 1)
+theme_override_font_sizes/font_size = 22
+text = "70"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="RemainingLabel" type="Label" parent="Layout/Rows"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.1058824, 0.1176471, 0.1490196, 0.6)
+theme_override_font_sizes/font_size = 14
+text = "Reste 10"
+horizontal_alignment = 2

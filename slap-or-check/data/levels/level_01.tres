@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="LevelConfig" load_steps=4 format=3]
+[gd_resource type="Resource" script_class="LevelConfig" load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://resources/LevelConfig.gd" id="1_level_config"]
 [ext_resource type="Resource" path="res://data/phrases/default_phrase_pool.tres" id="2_phrase_pool"]
 [ext_resource type="Resource" path="res://data/rules/standard_rule.tres" id="3_daily_rule"]
+[ext_resource type="Resource" path="res://data/balance/default_moral_balance.tres" id="4_moral_balance"]
 
 [resource]
 script = ExtResource("1_level_config")
@@ -11,3 +12,4 @@ character_count = 10
 walk_duration_seconds = 4.2
 phrase_pool = ExtResource("2_phrase_pool")
 daily_rule = ExtResource("3_daily_rule")
+moral_balance = ExtResource("4_moral_balance")

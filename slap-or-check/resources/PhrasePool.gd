@@ -54,8 +54,12 @@ func _phrases_of(kind: PhraseKind.Kind) -> PackedStringArray:
 
 
 ## Picks one sentence at random, or a visible placeholder if there are none.
+##
+## - Also warns in the output panel, naming the pool: an empty list shows up as a
+##   bubble saying nothing, which is visible but says nothing about its cause.
 func _draw_from(candidates: PackedStringArray) -> String:
 	if candidates.is_empty():
+		push_warning("Empty phrase list in %s: the pool has no sentence to draw." % resource_path)
 		return MISSING_PHRASE
 	var drawn_index: int = randi() % candidates.size()
 	return candidates[drawn_index]

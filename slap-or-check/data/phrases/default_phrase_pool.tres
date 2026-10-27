@@ -4,3 +4,6 @@
 
 [resource]
 script = ExtResource("1_phrase_pool")
+cliche_phrases = PackedStringArray("Salaire compétitif !", "Ici, on est une famille", "Poste junior, 5 ans d'expérience", "Environnement challengeant !", "Rémunération selon profil", "Tu porteras plusieurs casquettes", "Process en six entretiens", "Babyfoot et fruits frais !", "Dispo hier, idéalement", "Stage non payé, très formateur", "On cherche un mouton à 5 pattes", "Pas de salaire, mais une certification", "Rejoins une équipe dynamique", "Poste junior, 10 ans d'expérience")
+real_information_phrases = PackedStringArray("Salaire : 42 à 48 k€", "Réponse sous 7 jours, promis", "Télétravail 3 jours, vraiment", "Un seul entretien", "Voici pourquoi tu n'es pas retenu", "Mutuelle prise à 100 %", "Horaires fixes, sans astreinte", "Débutant ? On te forme", "On répond à tous, même non", "35 h, heures sup payées", "Salaire : 100 k à 120 k", "Télétravail au choix !")
+cult_phrases = PackedStringArray("Ravi d'annoncer que j'ai été ravi d'annoncer", "Ce que mon chat m'a appris sur le leadership", "J'ai refusé un poste. Thread 1/27")
