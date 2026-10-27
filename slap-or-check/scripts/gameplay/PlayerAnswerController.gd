@@ -1,8 +1,12 @@
-## Turns an answer given by the player into the player's visible reaction.
+## Turns what the level accepted into the player's visible reaction.
 ##
-## - Listens to the answer input and plays the matching clip on the player.
-## - Deliberately knows nothing about rules or score: whether the answer was the
-##   right one is someone else's job, wired to the same signal later.
+## - Listens to the level rather than to the controls: an answer only becomes a
+##   gesture once a character is within arm's reach, so the player never swings
+##   at thin air.
+## - Deliberately knows nothing of rules or score. Whether the answer was the
+##   right one is settled elsewhere; here it only decides which clip to play.
+## - Owns the mapping from an answer to a clip, which is why the level never has
+##   to name an animation.
 class_name PlayerAnswerController
 extends Node
 
@@ -12,19 +16,25 @@ const REACTION_BY_GESTURE: Dictionary = {
 	AnswerGesture.Kind.CHECK: Stickman.CHECK,
 }
 
-## Where answers come from. Injected from the scene.
-@export var answer_input: AnswerButtons
+## The level that accepts answers and reports shoves. Injected from the scene.
+@export var level_director: LevelDirector
 
 ## The figure that reacts. Injected from the scene.
 @export var player: Stickman
 
 
-## Listens to the answers the player gives.
+## Listens to the two things that happen to the player.
 func _ready() -> void:
-	answer_input.answer_submitted.connect(_on_answer_submitted)
+	level_director.answer_accepted.connect(_on_answer_accepted)
+	level_director.player_shoved.connect(_on_player_shoved)
 
 
-## Plays the reaction that matches the answer just given.
-func _on_answer_submitted(gesture: AnswerGesture.Kind) -> void:
+## Plays the gesture that matches the answer the level accepted.
+func _on_answer_accepted(gesture: AnswerGesture.Kind) -> void:
 	var reaction_clip: StringName = REACTION_BY_GESTURE[gesture]
 	player.play_reaction(reaction_clip)
+
+
+## Rocks the player when a character they ignored barges past.
+func _on_player_shoved() -> void:
+	player.play_reaction(Stickman.STAGGER)

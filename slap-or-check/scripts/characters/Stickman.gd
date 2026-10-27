@@ -5,6 +5,8 @@
 ## - Separates looping states (idle, walk) from one-shot reactions (slap, check,
 ##   stagger, knocked away): a reaction always falls back to idle when it ends.
 ## - Walking faster is a playback speed, not another clip.
+## - Can be dyed at birth, which is how a queue of characters avoids looking like
+##   one person repeated.
 class_name Stickman
 extends Node3D
 
@@ -33,6 +35,18 @@ const STAGGER := &"stagger"
 ## Drives every clip of this figure. Injected from the scene.
 @export var animation_player: AnimationPlayer
 
+## Everything the animations own. The root node above it is left to gameplay, so
+## a walk cycle and a path down the corridor never fight over the same transform.
+@export var body: Node3D
+
+## Material shared by every mesh of the body. Dyeing duplicates it rather than
+## writing to it, so one character's colour never leaks into the others.
+@export var body_material: StandardMaterial3D
+
+## Point a speech bubble is pinned above. On the root rather than under [member
+## body], so the bounce of the walk cycle does not shake the bubble.
+@export var bubble_anchor: Node3D
+
 ## True while a one-shot reaction is playing, which blocks a second one.
 var _is_playing_reaction: bool = false
 
@@ -52,6 +66,23 @@ func play_loop(clip_name: StringName, speed_scale: float = 1.0) -> void:
 	_is_playing_reaction = false
 	animation_player.speed_scale = speed_scale
 	animation_player.play(clip_name)
+
+
+## Dyes every mesh of the body, leaving the eyes alone.
+##
+## - Overrides the material of the meshes that share [member body_material], and
+##   recognises them by that very material: adding a hat or a tie later cannot
+##   be dyed by accident, and cannot be missed either if it is meant to be.
+func set_body_color(color: Color) -> void:
+	var dyed_material := body_material.duplicate() as StandardMaterial3D
+	dyed_material.albedo_color = color
+	var meshes: Array[Node] = body.find_children("*", "MeshInstance3D")
+	for mesh in meshes:
+		var mesh_instance := mesh as MeshInstance3D
+		var wears_the_body_material: bool = mesh_instance.material_override == body_material
+		if not wears_the_body_material:
+			continue
+		mesh_instance.material_override = dyed_material
 
 
 ## Plays a one-shot reaction, after which the figure returns to idle.

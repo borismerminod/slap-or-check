@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="PhrasePool" format=3 uid="uid://coh1mmpfojpgc"]
+
+[ext_resource type="Script" uid="uid://dekxehcvr16js" path="res://resources/PhrasePool.gd" id="1_phrase_pool"]
+
+[resource]
+script = ExtResource("1_phrase_pool")

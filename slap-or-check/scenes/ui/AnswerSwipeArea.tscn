@@ -1,0 +1,35 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/AnswerSwipeArea.gd" id="1_answer_swipe_area"]
+
+[node name="AnswerSwipeArea" type="Control" node_paths=PackedStringArray("slap_glow", "check_glow")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_answer_swipe_area")
+slap_glow = NodePath("SlapGlow")
+check_glow = NodePath("CheckGlow")
+
+[node name="SlapGlow" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 90.0
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.8509804, 0.254902, 0.1843137, 0.3529412)
+
+[node name="CheckGlow" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -90.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.07058824, 0.4784314, 0.3921569, 0.3529412)
