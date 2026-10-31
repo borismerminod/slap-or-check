@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/SpeechBubble.tscn" id="9_speech_bubble"]
 [ext_resource type="PackedScene" path="res://scenes/ui/AnswerSwipeArea.tscn" id="10_swipe_area"]
 [ext_resource type="PackedScene" path="res://scenes/ui/FeedbackBanner.tscn" id="11_feedback_banner"]
-[ext_resource type="Resource" path="res://data/levels/level_01.tres" id="12_level_config"]
+[ext_resource type="Resource" path="res://data/levels/level_lab.tres" id="12_level_config"]
 [ext_resource type="Script" path="res://scripts/gameplay/MoralController.gd" id="13_moral_controller"]
 [ext_resource type="PackedScene" path="res://scenes/ui/MoralHud.tscn" id="14_moral_hud"]
 [ext_resource type="Script" path="res://scripts/gameplay/LevelEndController.gd" id="15_level_end_controller"]
@@ -44,9 +44,9 @@ script = ExtResource("6_answer_controller")
 level_director = NodePath("../LevelDirector")
 player = NodePath("../Characters/Player")
 
-[node name="MoralController" type="Node" parent="."]
+[node name="MoralController" type="Node" parent="." node_paths=PackedStringArray("level_director")]
 script = ExtResource("13_moral_controller")
-config = ExtResource("12_level_config")
+level_director = NodePath("../LevelDirector")
 
 [node name="LevelEndController" type="Node" parent="." node_paths=PackedStringArray("level_director", "moral_controller", "restart_timer")]
 script = ExtResource("15_level_end_controller")
@@ -78,6 +78,7 @@ layout_mode = 3
 [connection signal="answer_judged" from="LevelDirector" to="MoralController" method="apply_outcome"]
 [connection signal="characters_remaining_changed" from="LevelDirector" to="Hud/MoralHud" method="show_remaining"]
 [connection signal="moral_changed" from="MoralController" to="Hud/MoralHud" method="show_moral"]
+[connection signal="low_moral_changed" from="MoralController" to="Hud/MoralHud" method="show_low_moral"]
 [connection signal="streak_bonus_earned" from="MoralController" to="Hud/FeedbackBanner" method="show_streak_bonus"]
 [connection signal="queue_cleared" from="LevelDirector" to="LevelEndController" method="report_victory"]
 [connection signal="depleted" from="MoralController" to="LevelEndController" method="report_defeat"]

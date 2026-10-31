@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="WalkPace" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://resources/WalkPace.gd" id="1_walk_pace"]
+
+[resource]
+script = ExtResource("1_walk_pace")
+display_name = "moyenne"
+duration_seconds = 3.4

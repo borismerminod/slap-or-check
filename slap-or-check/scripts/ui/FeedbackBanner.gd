@@ -26,6 +26,12 @@ const MISSED_SLAP_MESSAGE: String = "Raté : il fallait claquer"
 ## Said of a character who got past without an answer.
 const IGNORED_MESSAGE: String = "Il t'a bousculé et il est passé"
 
+## Said when a tough character shrugs a deserved slap off.
+const ABSORBED_SLAP_MESSAGE: String = "Il encaisse. Encore une !"
+
+## Said when a tough character shrugs a deserved check off.
+const ABSORBED_CHECK_MESSAGE: String = "Il en veut un deuxième !"
+
 ## Said when a run of correct answers completes. Takes the length of the run.
 const STREAK_BONUS_MESSAGE: String = "Série de %d : bonus de Moral"
 
@@ -34,6 +40,9 @@ const CORRECT_COLOR: Color = Color(0.055, 0.384, 0.314)
 
 ## Colour of a message that reports a mistake, the red of the slap button.
 const MISTAKE_COLOR: Color = Color(0.702, 0.188, 0.122)
+
+## Colour of a message that is neither a win nor a mistake.
+const NEUTRAL_COLOR: Color = Color(0.106, 0.118, 0.149)
 
 ## Label the message is written into. Injected from the scene.
 @export var message_label: Label
@@ -80,6 +89,9 @@ static func _message_for(outcome: AnswerOutcome) -> String:
 	var was_ignored: bool = outcome.verdict == AnswerOutcome.Verdict.IGNORED
 	if was_ignored:
 		return IGNORED_MESSAGE
+	var was_absorbed: bool = outcome.verdict == AnswerOutcome.Verdict.ABSORBED
+	if was_absorbed:
+		return _absorbed_message_for(outcome.given_gesture)
 	var was_correct: bool = outcome.verdict == AnswerOutcome.Verdict.CORRECT
 	if was_correct:
 		return _correct_message_for(outcome.given_gesture)
@@ -94,7 +106,15 @@ static func _correct_message_for(given_gesture: AnswerGesture.Kind) -> String:
 	return CORRECT_CHECK_MESSAGE
 
 
-## Says which gesture the rule of the day called for, so the mistake is learnt.
+## Says that the gesture was right but that the character is still standing.
+static func _absorbed_message_for(given_gesture: AnswerGesture.Kind) -> String:
+	var was_a_slap: bool = given_gesture == AnswerGesture.Kind.SLAP
+	if was_a_slap:
+		return ABSORBED_SLAP_MESSAGE
+	return ABSORBED_CHECK_MESSAGE
+
+
+## Says which gesture the rule called for, so the mistake is learnt.
 static func _missed_message_for(expected_gesture: AnswerGesture.Kind) -> String:
 	var a_slap_was_due: bool = expected_gesture == AnswerGesture.Kind.SLAP
 	if a_slap_was_due:
@@ -102,9 +122,13 @@ static func _missed_message_for(expected_gesture: AnswerGesture.Kind) -> String:
 	return MISSED_CHECK_MESSAGE
 
 
-## Greens a success, reds anything else.
+## Greens a success, reds a mistake, and leaves an absorbed hit neutral: it is
+## neither, and colouring it either way would mislead.
 static func _color_for(verdict: AnswerOutcome.Verdict) -> Color:
 	var was_correct: bool = verdict == AnswerOutcome.Verdict.CORRECT
 	if was_correct:
 		return CORRECT_COLOR
+	var was_absorbed: bool = verdict == AnswerOutcome.Verdict.ABSORBED
+	if was_absorbed:
+		return NEUTRAL_COLOR
 	return MISTAKE_COLOR

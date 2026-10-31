@@ -7,11 +7,13 @@
 class_name AnswerOutcome
 extends RefCounted
 
-## CORRECT and WRONG follow a gesture; IGNORED means the character walked through.
+## CORRECT and WRONG follow a gesture, IGNORED means the character walked
+## through, and ABSORBED is a correct answer a tough character shrugged off.
 enum Verdict {
 	CORRECT,
 	WRONG,
 	IGNORED,
+	ABSORBED,
 }
 
 ## Which of the three cases this outcome is.
@@ -42,6 +44,25 @@ static func from_answer(
 		outcome.verdict = Verdict.CORRECT
 	else:
 		outcome.verdict = Verdict.WRONG
+	return outcome
+
+
+## Builds the verdict of a correct answer the character absorbed instead of
+## going down.
+##
+## - Right gesture, so it is no mistake; but the encounter is not over, so it is
+##   no victory either. It pays little and it does not feed the run of correct
+##   answers.
+static func from_absorbed(
+	character: CharacterBrief,
+	given: AnswerGesture.Kind,
+	expected: AnswerGesture.Kind
+) -> AnswerOutcome:
+	var outcome := AnswerOutcome.new()
+	outcome.brief = character
+	outcome.given_gesture = given
+	outcome.expected_gesture = expected
+	outcome.verdict = Verdict.ABSORBED
 	return outcome
 
 

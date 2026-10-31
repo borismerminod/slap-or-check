@@ -20,7 +20,12 @@ func length() -> int:
 ##
 ## - A correct answer lengthens the run; a mistake and an ignored character both
 ##   break it.
+## - An absorbed hit does neither. The encounter is not over, so there is nothing
+##   to reward yet, and nothing was done wrong either.
 func record(verdict: AnswerOutcome.Verdict) -> void:
+	var was_absorbed: bool = verdict == AnswerOutcome.Verdict.ABSORBED
+	if was_absorbed:
+		return
 	var was_correct: bool = verdict == AnswerOutcome.Verdict.CORRECT
 	if not was_correct:
 		_length = 0

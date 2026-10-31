@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CharacterKind" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://resources/CharacterKind.gd" id="1_character_kind"]
+
+[resource]
+script = ExtResource("1_character_kind")
+display_name = ""
+resilience = 0
+walk_duration_factor = 1.0
+figure_scale = 1.0
+accessory_slot = 0

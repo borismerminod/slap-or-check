@@ -32,7 +32,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_moral_hud")
-low_moral_threshold = 30.0
 moral_bar = NodePath("Layout/Rows/TopRow/MoralBar")
 normal_fill = SubResource("StyleBoxFlat_fill_normal")
 low_fill = SubResource("StyleBoxFlat_fill_low")

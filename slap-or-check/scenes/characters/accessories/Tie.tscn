@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="StandardMaterial3D" path="res://assets/materials/tie.tres" id="1_tie"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_tie"]
+size = Vector3(0.09, 0.38, 0.03)
+
+[node name="Tie" type="Node3D"]
+
+[node name="Band" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_tie")
+material_override = ExtResource("1_tie")

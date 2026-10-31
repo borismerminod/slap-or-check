@@ -16,6 +16,10 @@ extends PanelContainer
 ## Label the sentence is written into. Injected from the scene.
 @export var phrase_label: Label
 
+## Label naming a special character above their sentence, so a brick is never a
+## surprise the first time it walks up. Injected from the scene.
+@export var speaker_label: Label
+
 ## The point the bubble is pinned above, or null while it is hidden.
 var _anchor: Node3D = null
 
@@ -26,8 +30,13 @@ func _ready() -> void:
 
 
 ## Writes a sentence into the bubble and pins it above the given anchor.
-func show_phrase(sentence: String, anchor: Node3D) -> void:
+##
+## - [param speaker] names a special character. Empty for an ordinary one, whose
+##   line then disappears rather than leaving a gap.
+func show_phrase(sentence: String, speaker: String, anchor: Node3D) -> void:
 	phrase_label.text = sentence
+	speaker_label.text = speaker
+	speaker_label.visible = not speaker.is_empty()
 	_anchor = anchor
 	reset_size()
 	_follow_anchor()

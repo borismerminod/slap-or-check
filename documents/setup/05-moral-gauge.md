@@ -103,7 +103,7 @@ code de le dire, pas au fichier de scène.
 | `resources/MoralBalance.gd` | ce que chaque événement coûte ou rapporte |
 | `scripts/gameplay/MoralController.gd` | tient le Moral à jour |
 | `scripts/ui/MoralHud.gd` + `scenes/ui/MoralHud.tscn` | barre, valeur, « Reste N » |
-| `data/balance/default_moral_balance.tres` | les sept valeurs du tableau 4 |
+| `data/balance/default_moral_balance.tres` | les valeurs d'équilibrage du game design |
 
 ### Modifiés
 
@@ -117,7 +117,8 @@ code de le dire, pas au fichier de scène.
 
 ## Valeurs chiffrées et leur origine
 
-Tableau 4 du game design, toutes dans `default_moral_balance.tres`.
+Tableau des effets du game design (section « Victoire, défaite et jauge de Moral »), toutes
+dans `default_moral_balance.tres`.
 
 | Champ | Valeur | Origine |
 |---|---|---|
@@ -128,7 +129,9 @@ Tableau 4 du game design, toutes dans `default_moral_balance.tres`.
 | `ignored_character_penalty` | 14 | « Personne laissée passer −14 » |
 | `streak_length_for_bonus` | 5 | « Série de 5 bonnes réactions » |
 | `streak_bonus` | 8 | « +8 bonus » |
-| `low_moral_threshold` (HUD) | 30 | maquette, `classList.toggle("low", m < 30)` |
+| `low_moral_threshold` | 30 | maquette, `classList.toggle("low", m < 30)`. Posé sur le HUD
+à cette étape, remonté dans `MoralBalance` à l'étape 07 : c'est de l'équilibrage, et c'est le
+même nombre que le barème des étoiles |
 
 Les pénalités sont stockées **positives** et nommées `penalty` : remplir l'inspecteur ne
 demande pas de se souvenir d'un signe, et `MoralBalance.change_for()` le pose.

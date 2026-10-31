@@ -16,13 +16,23 @@ signal moral_changed(new_value: float)
 ## Emitted when a run of correct answers completes and earns its bonus.
 signal streak_bonus_earned(streak_length: int)
 
+## Emitted when the moral crosses the warning threshold, in either direction.
+##
+## - The threshold is a balance figure, so whoever holds the balance decides.
+##   The HUD is told to warn; it never owns the number.
+signal low_moral_changed(is_low: bool)
+
 ## Emitted once, when the moral runs out and the level is lost.
 signal depleted
 
-## The level being played, which designates the balance to apply. Injected from
-## the scene. Taken whole rather than as a bare balance, so the prices follow the
-## level instead of being wired a second time next to it.
-@export var config: LevelConfig
+## The level in play, read through the director. Injected from the scene.
+##
+## - Taken from the director rather than designated here, so the scene names the
+##   level in exactly one place: naming it twice would let a level be played with
+##   somebody else's prices.
+## - Reading a property of an injected collaborator, which is not the same thing
+##   as reaching through the tree for it.
+@export var level_director: LevelDirector
 
 ## What each event costs or earns, read from the level once.
 var _balance: MoralBalance = null
@@ -33,15 +43,20 @@ var _gauge: MoralGauge = null
 ## The run of correct answers in a row.
 var _streak: AnswerStreak = AnswerStreak.new()
 
+## True while the moral sits under the warning threshold, so the crossing is
+## reported once and not on every frame of the drain.
+var _is_moral_low: bool = false
+
 
 ## Opens the gauge and announces its value once, so the HUD shows the right
 ## number before the first character sets off.
 func _ready() -> void:
+	var config: LevelConfig = level_director.config
 	_balance = config.moral_balance
 	_gauge = MoralGauge.new(_balance.starting_value)
 	_gauge.value_changed.connect(_on_value_changed)
 	_gauge.depleted.connect(_on_depleted)
-	moral_changed.emit(_gauge.value())
+	_report_moral(_gauge.value())
 
 
 ## Wears the moral down with the time that passes.
@@ -77,7 +92,23 @@ func _grant_streak_bonus_if_due() -> void:
 
 ## Passes every change of the moral on to whoever shows it.
 func _on_value_changed(new_value: float) -> void:
+	_report_moral(new_value)
+
+
+## Announces a moral, and the warning along with it when it has just changed.
+func _report_moral(new_value: float) -> void:
 	moral_changed.emit(new_value)
+	_report_low_moral_if_crossed(new_value)
+
+
+## Announces the warning only on the frame the threshold is crossed.
+func _report_low_moral_if_crossed(new_value: float) -> void:
+	var is_low: bool = new_value < _balance.low_moral_threshold
+	var is_already_reported: bool = is_low == _is_moral_low
+	if is_already_reported:
+		return
+	_is_moral_low = is_low
+	low_moral_changed.emit(is_low)
 
 
 ## Freezes the moral where it stands, for good.

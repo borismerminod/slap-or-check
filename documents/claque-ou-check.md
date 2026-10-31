@@ -39,29 +39,22 @@ Phrases « cultes » (rares, toujours bateau) : « Ravi d'annoncer que j'ai ét�
 
 ---
 
-## 2. Règle du jour
+## 2. Boucle de jeu
 
-Chaque niveau commence par une carte « Règle du jour » qui dit explicitement ce qu'il faut claquer et checker.
+1. Un personnage quitte la file (visible au fond du couloir) et marche vers le joueur.
+2. Le joueur lit la bulle et swipe. Au swipe, le personnage accélère jusqu'au joueur et l'animation se joue.
+3. Retour d'information immédiat (message, onomatopée, variation de la jauge).
+4. Personnage suivant, jusqu'à la fin de la file.
 
-- Règle standard : *« Claque les phrases bateau. Check les vraies infos. »*
-- Elle rend le jugement **vérifiable** plutôt que subjectif : une erreur paraît juste au joueur, puisqu'il connaissait la règle.
-- Elle sert de support aux variations (mode inversé, double règle…).
-
----
-
-## 3. Boucle de jeu
-
-1. Carte « Règle du jour ».
-2. Un personnage quitte la file (visible au fond du couloir) et marche vers le joueur.
-3. Le joueur lit la bulle et swipe. Au swipe, le personnage accélère jusqu'au joueur et l'animation se joue.
-4. Retour d'information immédiat (message, onomatopée, variation de la jauge).
-5. Personnage suivant, jusqu'à la fin de la file.
+La règle est **fixe et la même partout** : claque les phrases bateau, check les vraies
+infos. Il n'y a pas de carte d'annonce en début de niveau — le joueur la découvre en jouant,
+et le retour d'information après une erreur dit ce qu'il fallait faire.
 
 Le **temps de réaction** est représenté par la **distance** : plus le niveau est rapide, plus le personnage marche vite.
 
 ---
 
-## 4. Victoire, défaite et jauge de Moral
+## 3. Victoire, défaite et jauge de Moral
 
 Les « 3 essais » sont remplacés par une **jauge de Moral** (0 à 100), cohérente avec le thème : la recherche d'emploi use.
 
@@ -82,7 +75,7 @@ Les « 3 essais » sont remplacés par une **jauge de Moral** (0 à 100), cohér
 
 ---
 
-## 5. Progression des niveaux
+## 4. Progression des niveaux
 
 Niveaux courts (45 à 90 secondes). La difficulté joue sur la vitesse de marche et l'ajout de briques, plus que sur la longueur de la file.
 
@@ -91,15 +84,14 @@ Niveaux courts (45 à 90 secondes). La difficulté joue sur la vitesse de marche
 | 1 à 3 | Premier jour | 10 | Lente | Aucune |
 | 4 à 7 | Les relous | 14 | Moyenne | Le Relou |
 | 8 à 10 | Recruteurs coriaces | 16 | Moyenne | Vrai Gentil, Recruteur coriace |
-| 11+ | Salon de l'emploi | 20 | Rapide | Bulle brouillée, Influenceur, Bonus café |
-| Bonus | Mode inversé | 12 | Moyenne | Mode inversé |
+| 11+ | Salon de l'emploi | 20 | Rapide | Influenceur, Bonus café |
 | Tous les 10 | Boss | — | — | Le Gourou |
 
 Principe : **une brique est introduite seule** sur un niveau, puis combinée aux autres.
 
 ---
 
-## 6. Système de contenu
+## 5. Système de contenu
 
 Pour éviter que le joueur mémorise les phrases au lieu de les lire :
 
@@ -110,9 +102,9 @@ Pour éviter que le joueur mémorise les phrases au lieu de les lire :
 
 ---
 
-## 7. Briques de gameplay
+## 6. Briques de gameplay
 
-### 7.1 Personnages spéciaux (présents dans la maquette)
+### 6.1 Personnages spéciaux (présents dans la maquette)
 
 Chaque personnage spécial est **reconnaissable visuellement** et annoncé dans sa bulle.
 
@@ -125,15 +117,16 @@ Chaque personnage spécial est **reconnaissable visuellement** et annoncé dans 
 
 Principe commun : **les erreurs ont des conséquences visibles dans la file**, pas seulement un chiffre qui baisse.
 
-### 7.2 Modificateurs de niveau (présents dans la maquette)
+### 6.2 Modificateurs de niveau (présents dans la maquette)
 
 | Brique | Effet |
 |---|---|
-| **Bulle brouillée** | La phrase ne devient lisible qu'à mi-chemin (« l'algorithme charge ») |
 | **Bonus café** | Apparaît par moments ; le toucher ralentit la marche pendant 5 secondes |
-| **Mode inversé** | La règle s'inverse : check le bateau, claque le concret |
 
-### 7.3 Briques prévues (hors maquette)
+Deux modificateurs ont été **abandonnés** : la *bulle brouillée*, jugée trop punitive, et le
+*mode inversé*, qui supposait une règle variable. Voir `documents/setup/07-difficulty-variables.md`.
+
+### 6.3 Briques prévues (hors maquette)
 
 | Brique | Idée |
 |---|---|
@@ -141,7 +134,7 @@ Principe commun : **les erreurs ont des conséquences visibles dans la file**, p
 | **Arrivées groupées** | Deux personnages côte à côte, chacun sa bulle, à traiter dans l'ordre |
 | **Swipe haut : esquiver** | 3e catégorie (pub, spam) à introduire vers le niveau 10 |
 | **Appui long : bloquer** | Geste réservé aux boss |
-| **Double règle** | Deux conditions à vérifier en même temps |
+| **Double règle** | Deux conditions à vérifier en même temps. ⚠️ Reposait sur une règle variable, abandonnée : à repenser ou à écarter |
 | **Boss « Le Gourou »** | Enchaîne plusieurs phrases ; chaque bonne réponse lui retire un point de vie |
 | **Décors** | Open space, salon de l'emploi, visio : changent la vitesse et le ton |
 | **Mode infini** | La file sans fin, avec classement |
@@ -149,7 +142,7 @@ Principe commun : **les erreurs ont des conséquences visibles dans la file**, p
 
 ---
 
-## 8. Rétention et monétisation
+## 7. Rétention et monétisation
 
 - **Étoiles** par niveau, à collectionner.
 - **Pub récompensée** sur l'écran de défaite : +50 de Moral pour continuer, une fois par niveau.
@@ -159,7 +152,7 @@ Principe commun : **les erreurs ont des conséquences visibles dans la file**, p
 
 ---
 
-## 9. Choix technique pour le POC
+## 8. Choix technique pour le POC
 
 | Option | Avantages | Limites |
 |---|---|---|
@@ -171,7 +164,7 @@ Recommandation actuelle : valider le plaisir de jeu avec la maquette web, puis c
 
 ---
 
-## 10. Questions ouvertes
+## 9. Questions ouvertes
 
 - Distance de départ et vitesse de marche : a-t-on le temps de lire la bulle ?
 - Position de la caméra : par-dessus l'épaule, ou vue subjective ?

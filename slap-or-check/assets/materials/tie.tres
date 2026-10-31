@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "Tie"
+albedo_color = Color(0.5568628, 0.1058824, 0.1686275, 1)
+roughness = 0.7

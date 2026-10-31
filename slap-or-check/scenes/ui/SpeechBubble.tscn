@@ -18,15 +18,30 @@ corner_radius_top_right = 18
 corner_radius_bottom_right = 18
 corner_radius_bottom_left = 18
 
-[node name="SpeechBubble" type="PanelContainer" node_paths=PackedStringArray("phrase_label")]
+[node name="SpeechBubble" type="PanelContainer" node_paths=PackedStringArray("phrase_label", "speaker_label")]
 offset_right = 292.0
-offset_bottom = 60.0
+offset_bottom = 84.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bubble")
 script = ExtResource("1_speech_bubble")
-phrase_label = NodePath("PhraseLabel")
+phrase_label = NodePath("Lines/PhraseLabel")
+speaker_label = NodePath("Lines/SpeakerLabel")
 
-[node name="PhraseLabel" type="Label" parent="."]
+[node name="Lines" type="VBoxContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="SpeakerLabel" type="Label" parent="Lines"]
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.8509804, 0.2549020, 0.1843137, 1)
+theme_override_font_sizes/font_size = 14
+text = "Le Relou"
+horizontal_alignment = 1
+
+[node name="PhraseLabel" type="Label" parent="Lines"]
 custom_minimum_size = Vector2(260, 0)
 layout_mode = 2
 mouse_filter = 2

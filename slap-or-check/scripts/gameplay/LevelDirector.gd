@@ -134,10 +134,22 @@ func submit_answer(gesture: AnswerGesture.Kind) -> void:
 ## Reports the verdict and clears the bubble, the moment the answer is known.
 func _on_answer_judged(outcome: AnswerOutcome) -> void:
 	speech_bubble.clear()
+	_let_the_kind_react(outcome)
+	_report_characters_remaining()
 	answer_judged.emit(outcome)
 	var was_ignored: bool = outcome.verdict == AnswerOutcome.Verdict.IGNORED
 	if was_ignored:
 		player_shoved.emit()
+
+
+## Lets the kind of the answered character change what is still to come.
+##
+## - Called for every character and every verdict. An ordinary character changes
+##   nothing; a brick decides for itself. No condition here names a brick, which
+##   is what lets the next one be added without reopening this file.
+func _let_the_kind_react(outcome: AnswerOutcome) -> void:
+	var kind: CharacterKind = outcome.brief.character_kind
+	kind.react_in_queue(outcome, _queue)
 
 
 ## Asks for the player's gesture to be seen, now that the character is in range.
@@ -203,20 +215,43 @@ func _start_next_encounter() -> void:
 		return
 	var brief: CharacterBrief = _queue.pop_next()
 	var figure: Stickman = spawner.spawn(brief)
-	var daily_rule: DailyRule = config.daily_rule
-	var expected_gesture: AnswerGesture.Kind = daily_rule.expected_gesture_for(brief.phrase_kind)
+	var expected_gesture: AnswerGesture.Kind = AnswerRule.expected_gesture_for(brief.phrase_kind)
 	_current_encounter = Encounter.new(brief, figure, expected_gesture, spawner.answer_z)
 	_listen_to_current_encounter()
-	_current_encounter.start_walk(spawner.spawn_z, config.walk_duration_seconds)
-	speech_bubble.show_phrase(brief.phrase, figure.bubble_anchor)
+	var walk_duration: float = _walk_duration_for(brief)
+	_current_encounter.start_walk(spawner.spawn_z, walk_duration)
+	_show_current_phrase()
 	_report_characters_remaining()
 
 
-## Listens to the three moments of the encounter just started.
+## How long this character takes to walk the corridor.
+##
+## - The pace of the level, bent by the kind of character: a tough recruiter
+##   takes their time, which is the only favour they do the player.
+func _walk_duration_for(brief: CharacterBrief) -> float:
+	var walk_pace: WalkPace = config.walk_pace
+	var kind: CharacterKind = brief.character_kind
+	return walk_pace.duration_seconds * kind.walk_duration_factor
+
+
+## Listens to the moments of the encounter just started.
 func _listen_to_current_encounter() -> void:
 	_current_encounter.answer_judged.connect(_on_answer_judged)
 	_current_encounter.player_reaction_requested.connect(_on_player_reaction_requested)
 	_current_encounter.resolved.connect(_on_encounter_resolved)
+	_current_encounter.returned_for_another_round.connect(_show_current_phrase)
+
+
+## Puts the sentence of the walking character on screen, with their kind named
+## above it when they have one.
+##
+## - Shown again when a character who absorbed a blow walks back in, which is why
+##   it reads from the encounter rather than taking arguments.
+func _show_current_phrase() -> void:
+	var brief: CharacterBrief = _current_encounter.brief()
+	var figure: Stickman = _current_encounter.figure()
+	var kind: CharacterKind = brief.character_kind
+	speech_bubble.show_phrase(brief.phrase, kind.display_name, figure.bubble_anchor)
 
 
 ## Stops spawning, and announces the clear corridor as soon as it is one.

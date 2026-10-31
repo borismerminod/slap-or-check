@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" format=3]
+
+[resource]
+resource_name = "RedCap"
+albedo_color = Color(0.8509804, 0.2549020, 0.1843137, 1)
+roughness = 0.8

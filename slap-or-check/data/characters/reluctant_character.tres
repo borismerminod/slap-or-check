@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ReluctantCharacterKind" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://resources/ReluctantCharacterKind.gd" id="1_reluctant"]
+[ext_resource type="PackedScene" path="res://scenes/characters/accessories/RedCap.tscn" id="2_red_cap"]
+
+[resource]
+script = ExtResource("1_reluctant")
+display_name = "Le Relou"
+resilience = 0
+walk_duration_factor = 1.0
+figure_scale = 1.0
+accessory_scene = ExtResource("2_red_cap")
+accessory_slot = 0
+return_rank = 2

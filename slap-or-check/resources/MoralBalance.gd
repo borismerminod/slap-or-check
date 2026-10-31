@@ -3,7 +3,8 @@
 ## - Shared by every level: tuning the game means editing one .tres, because a
 ##   level differs by its walking speed and the length of its queue, not by its
 ##   prices.
-## - Same shape as [DailyRule], which also answers a question about its own data.
+## - A resource that answers a question about its own data, through
+##   [method change_for], rather than a bag of numbers its callers interpret.
 ## - Penalties are stored positive and named penalty, so filling in the inspector
 ##   never asks anyone to remember a sign. [method change_for] puts it back.
 ## - None of these values is tested, and all of them will move.
@@ -22,6 +23,10 @@ extends Resource
 ## Points lost by answering with the other gesture.
 @export_range(0.0, 50.0, 1.0) var wrong_answer_penalty: float = 22.0
 
+## Points earned by a correct answer a tough character absorbed. Small on
+## purpose: absorbing is progress, not a victory.
+@export_range(0.0, 50.0, 1.0) var absorbed_answer_reward: float = 2.0
+
 ## Points lost by letting a character walk through unanswered.
 @export_range(0.0, 50.0, 1.0) var ignored_character_penalty: float = 14.0
 
@@ -30,6 +35,11 @@ extends Resource
 
 ## Points earned every time that run is completed.
 @export_range(0.0, 50.0, 1.0) var streak_bonus: float = 8.0
+
+## Moral below which the gauge warns that the level is nearly lost. Balance and
+## not decoration, which is why it lives here rather than in the HUD: the star
+## ratings of the game design are built on the same figures.
+@export_range(0.0, 100.0, 1.0) var low_moral_threshold: float = 30.0
 
 
 ## Returns the signed change of moral a verdict is worth.
@@ -44,4 +54,6 @@ func change_for(verdict: AnswerOutcome.Verdict) -> float:
 			return -wrong_answer_penalty
 		AnswerOutcome.Verdict.IGNORED:
 			return -ignored_character_penalty
+		AnswerOutcome.Verdict.ABSORBED:
+			return absorbed_answer_reward
 	return 0.0
