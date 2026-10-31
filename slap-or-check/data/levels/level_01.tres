@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="LevelConfig" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://resources/LevelConfig.gd" id="1_level_config"]
+[ext_resource type="Resource" path="res://data/phrases/default_phrase_pool.tres" id="2_phrase_pool"]
+[ext_resource type="Resource" path="res://data/paces/slow_pace.tres" id="3_walk_pace"]
+[ext_resource type="Resource" path="res://data/balance/default_moral_balance.tres" id="4_moral_balance"]
+[ext_resource type="Resource" path="res://data/characters/base_character.tres" id="5_base_character"]
+
+[resource]
+script = ExtResource("1_level_config")
+display_name = "Premier jour"
+character_count = 10
+walk_pace = ExtResource("3_walk_pace")
+base_character_kind = ExtResource("5_base_character")
+phrase_pool = ExtResource("2_phrase_pool")
+moral_balance = ExtResource("4_moral_balance")

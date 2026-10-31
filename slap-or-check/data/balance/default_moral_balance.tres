@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MoralBalance" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://resources/MoralBalance.gd" id="1_moral_balance"]
+
+[resource]
+script = ExtResource("1_moral_balance")
+starting_value = 70.0
+drain_per_second = 0.8
+correct_answer_reward = 5.0
+wrong_answer_penalty = 22.0
+ignored_character_penalty = 14.0
+streak_length_for_bonus = 5
+streak_bonus = 8.0

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CharacterKind" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://resources/CharacterKind.gd" id="1_character_kind"]
+[ext_resource type="PackedScene" path="res://scenes/characters/accessories/Tie.tscn" id="2_tie"]
+
+[resource]
+script = ExtResource("1_character_kind")
+display_name = "Recruteur coriace"
+resilience = 1
+walk_duration_factor = 1.3
+figure_scale = 1.18
+accessory_scene = ExtResource("2_tie")
+accessory_slot = 1

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="LevelConfig" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://resources/LevelConfig.gd" id="1_level_config"]
+[ext_resource type="Resource" path="res://data/phrases/default_phrase_pool.tres" id="2_phrase_pool"]
+[ext_resource type="Resource" path="res://data/paces/medium_pace.tres" id="3_walk_pace"]
+[ext_resource type="Resource" path="res://data/balance/default_moral_balance.tres" id="4_moral_balance"]
+[ext_resource type="Resource" path="res://data/characters/base_character.tres" id="5_base_character"]
+[ext_resource type="Resource" path="res://data/characters/reluctant_character.tres" id="6_reluctant"]
+[ext_resource type="Resource" path="res://data/characters/tough_recruiter.tres" id="7_tough"]
+
+[resource]
+script = ExtResource("1_level_config")
+display_name = "Partie labo"
+character_count = 12
+walk_pace = ExtResource("3_walk_pace")
+bricks = Array[CharacterKind]([ExtResource("6_reluctant"), ExtResource("6_reluctant"), ExtResource("7_tough"), ExtResource("7_tough")])
+base_character_kind = ExtResource("5_base_character")
+phrase_pool = ExtResource("2_phrase_pool")
+moral_balance = ExtResource("4_moral_balance")

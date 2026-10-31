@@ -371,9 +371,18 @@ _data = {
 &"walk": SubResource("Animation_walk")
 }
 
-[node name="Stickman" type="Node3D" node_paths=PackedStringArray("animation_player")]
+[node name="Stickman" type="Node3D" node_paths=PackedStringArray("animation_player", "body", "bubble_anchor", "head_anchor", "chest_anchor", "hand_anchor")]
 script = ExtResource("3_stickman")
 animation_player = NodePath("AnimationPlayer")
+body = NodePath("Body")
+body_material = ExtResource("1_body")
+bubble_anchor = NodePath("BubbleAnchor")
+head_anchor = NodePath("Body/Head/HatAnchor")
+chest_anchor = NodePath("Body/ChestAnchor")
+hand_anchor = NodePath("Body/RightArmPivot/HandAnchor")
+
+[node name="BubbleAnchor" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, 0)
 
 [node name="Body" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
